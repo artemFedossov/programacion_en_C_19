@@ -1,0 +1,25 @@
+# depslib dependency file v1.0
+1553518804 source:c:\users\alumno\desktop\eje1\main.c
+	<stdio.h>
+	<stdlib.h>
+	"funcionesMatematica.h"
+
+1553518753 source:c:\users\alumno\desktop\eje1\funcionesmatematica.c
+	<stdio.h>
+	<stdlib.h>
+	"funcionesMatematica.h"
+
+1553518722 c:\users\alumno\desktop\eje1\funcionesmatematica.h
+
+1553518955 source:c:\users\artem\desktop\programacion_en_c_19\guia_ejercicios\eje1\funcionesmatematica.c
+	<stdio.h>
+	<stdlib.h>
+	"funcionesMatematica.h"
+
+1553518722 c:\users\artem\desktop\programacion_en_c_19\guia_ejercicios\eje1\funcionesmatematica.h
+
+1553518804 source:c:\users\artem\desktop\programacion_en_c_19\guia_ejercicios\eje1\main.c
+	<stdio.h>
+	<stdlib.h>
+	"funcionesMatematica.h"
+
