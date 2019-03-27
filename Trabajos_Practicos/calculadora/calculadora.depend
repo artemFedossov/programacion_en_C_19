@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1553696836 source:c:\users\alumno\desktop\programacion_en_c_19\trabajos_practicos\calculadora\main.c
+	<stdio.h>
+	<stdlib.h>
+
