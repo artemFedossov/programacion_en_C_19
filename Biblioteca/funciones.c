@@ -26,6 +26,13 @@ float calcularPromedio(int numero[],int hasta){
     return promedio;
 }
 
+
+/** \brief obtiene un numero entero
+ *
+ * \param mensaje[]: mensaje que pide un numero por pantalla
+ * \return num: retorna el numero ingresado
+ *
+ */
 int obtenerEntero(char mensaje[]){
 
     int num;
@@ -38,6 +45,13 @@ int obtenerEntero(char mensaje[]){
     return num;
 }
 
+
+/** \brief valida que un numero sea distinto de cero
+ *
+ * \param num: el numero que sera validado para que sea distinto de cero
+ * \return num: retorna el numero
+ *
+ */
 int distinoDeCero(int num){
 
     char mensaje[51] = "Reingrese un numero distinto de Cero: ";
@@ -50,6 +64,14 @@ int distinoDeCero(int num){
     return num;
 }
 
+
+/** \brief multiplica dos numeros
+ *
+ * \param numA: un numero que sera multiplicado
+ * \param numB: el otro numero a multiplicar
+ * \return total: retorna el total de la multiplicacion
+ *
+ */
 int multiplicar(int numA, int numB){
 
     int total;
@@ -59,6 +81,13 @@ int multiplicar(int numA, int numB){
     return total;
 }
 
+
+/** \brief calcula el cuadrado de un numero
+ *
+ * \param num: un numero que sera multiplicado por si mismo
+ * \return total: retorna el total de la multiplicacion
+ *
+ */
 int cuadradoDeUnNumero(int num){
 
     int total;
@@ -66,4 +95,93 @@ int cuadradoDeUnNumero(int num){
     total = num * num;
 
     return total;
+}
+
+
+/** \brief obtiene un numero flotante
+ *
+ * \param mensaje[]: mensaje que pide un numero por pantalla
+ * \return num: retorna el numero ingresado
+ *
+ */
+float obtenerFlotante(char mensaje[]){
+
+    float num;
+
+    printf(mensaje);
+    scanf("%f",&num);
+
+    num = mayorCero(num);
+
+    return num;
+}
+
+
+/** \brief valida que un numero sea mayor a cero
+ *
+ * \param num: el numero que sera validado para que sea mayor a cero
+ * \return num: retorna el numero
+ *
+ */
+float mayorCero(float num){
+
+    char mensaje[51] = "Reingrese un numero mayor de Cero: ";
+
+    while(num<=0){
+
+        num = obtenerFlotante(mensaje);
+    }
+
+    return num;
+}
+
+
+/** \brief calcular la longitud de una circunferencia teniendo como dato el radio y muestra el dato
+ *
+ * \param radio: es el dato para calcular la circunferencia
+ * \return void
+ *
+ */
+void longitudCircunferencia(float radio){
+    float pi = 3.14;
+    float longitud;
+    float diamentro = radio * 2;
+
+    longitud = diamentro * pi;
+
+    printf("La longitud es %.2f\n",longitud);
+}
+
+
+/** \brief calcular el area de una circunferencia teniendo como dato el radio y muestra el dato
+ *
+ * \param radio: es el dato para calcular el area
+ * \return void
+ *
+ */
+void areaCircunferencia(float radio){
+    float pi = 3.14;
+    float area;
+
+    area = (radio*radio)*pi;
+
+    printf("El area es %.2f\n",area);
+}
+
+
+/** \brief calcula la superficie de un triangulo teniendo la altura y la base y muestra por pantalla el resultado
+ *
+ * \param altura: dato para calcular la superficie
+ * \param base: dato para calcular la base
+ * \return void
+ *
+ */
+void superficieTriangulo(float altura, float base){
+
+    float superficie;
+
+    superficie = base * altura;
+
+    printf("\nLa superficie del triangulo es: %.2f\n",superficie);
+
 }

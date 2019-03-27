@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1553693250 source:c:\users\alumno\desktop\programacion_en_c_19-master\guia_ejercicios\eje8\main.c
+	<stdio.h>
+	<stdlib.h>
+
