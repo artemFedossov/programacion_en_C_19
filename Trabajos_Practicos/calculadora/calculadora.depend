@@ -3,12 +3,16 @@
 	<stdio.h>
 	<stdlib.h>
 
-1554135164 source:c:\users\artem\desktop\programacion_en_c_19\trabajos_practicos\calculadora\main.c
+1554401294 source:c:\users\artem\desktop\programacion_en_c_19\trabajos_practicos\calculadora\main.c
 	<stdio.h>
 	<stdlib.h>
+	"funciones.h"
 
-1554296209 source:c:\users\artem\desktop\programacion_en_c_19\trabajos_practicos\calculadora\funciones.c
+1554403253 source:c:\users\artem\desktop\programacion_en_c_19\trabajos_practicos\calculadora\funciones.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
+	"funciones.h"
+
+1554403253 c:\users\artem\desktop\programacion_en_c_19\trabajos_practicos\calculadora\funciones.h
 

@@ -1,30 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-void menuCalculo(char mensaje[][51],char eMensaje[],float *numA,float *numB,float *resultadoSuma,float *resultadoResta,float *resultadoDivision,float *resultadoMultiplicacion,int *resultadoFactorial);
-void menuInforme(char mensaje[][51],char eMensaje[],float *numA,float *numB,float *resultadoSuma,float *resultadoResta,float *resultadoDivision,float *resultadoMultiplicacion,int *resultadoFactorial);
-void validarOpcionMenu(char *opcion,int desde,int hasta,int cantidad,char eMensaje[]);
-int obtenerFlotante(float *num,char mensaje[],char eMensaje[]);
-void suma(float *numA,float *numB,float *resultado);
-void resta(float *numA,float *numB,float *resultado);
-void division(float *numA,float *numB,float *resultado);
-void multiplicacion(float *numA,float *numB,float *resultado);
+#include "funciones.h"
 
 
 void menu(){
 
     int ingresoNumA = 0;
     int ingresoNumB = 0;
-    int resultadoFactorial;
+    int resultadoFactorialA;
+    int resultadoFactorialB;
     float numeroA = 0;
     float numeroB = 0;
     float resultadoSuma;
     float resultadoResta;
     float resultadoDivision;
     float resultadoMultiplicacion;
-    float auxNumA;
-    float auxNumB;
     char opcion[10];
     char mensajeMenu[6][51] =  {"\n1) Ingresar el 1er operador (A = %.2f) ","\n2) Ingresar el 2do operador (B = %.2f) ","\n3) Calcular operaciones\n","4) Informar resultado\n","5) Salir\n\n","Opcion: "};
     char mensajeOpcion3[8][51] = {"1) Calcular la suma\n","2) Calcular la resta\n","3) Calcular la division\n","4) Calcular la multiplicacion\n","5) Calcular el factorial\n","6) Calcular todas las operaciones\n","7) Regresar\n\n","Opcion: "};
@@ -32,7 +23,8 @@ void menu(){
     char eMensaje[3][51] = {"ERROR. Ingreso una opcion incorrecta, REINGRESE: ","ERROR. Ingrese un numero, REINGRESE: ","No ingreso todos los numeros\n"};
     char titulo[] = ("--------------------------------------------------------\n\t\t\tCALCULADORA\n--------------------------------------------------------\n");;
 
-    int *ptrResultadoFactorial;
+    int *ptrResultadoFactorialA;
+    int *ptrResultadoFactorialB;
     float *ptrNumeroA;
     float *ptrNumeroB;
     float *ptrResultadoSuma;
@@ -48,7 +40,8 @@ void menu(){
     ptrResultadoResta = &resultadoResta;
     ptrResultadoDivision = &resultadoDivision;
     ptrResultadoMultipliacion = &resultadoMultiplicacion;
-    ptrResultadoFactorial = &resultadoFactorial;
+    ptrResultadoFactorialA = &resultadoFactorialA;
+    ptrResultadoFactorialB = &resultadoFactorialB;
 
     do{
             system("cls");
@@ -76,19 +69,17 @@ void menu(){
                 case '3':
                     if(ingresoNumA && ingresoNumB){
 
-                        menuCalculo(mensajeOpcion3,eMensaje[0],ptrNumeroA,ptrNumeroB,ptrResultadoSuma,ptrResultadoResta,ptrResultadoDivision,ptrResultadoMultipliacion,ptrResultadoFactorial);
+                        menuCalculo(mensajeOpcion3,eMensaje[0],ptrNumeroA,ptrNumeroB,ptrResultadoSuma,ptrResultadoResta,ptrResultadoDivision,ptrResultadoMultipliacion,ptrResultadoFactorialA,ptrResultadoFactorialB);
 
                     }else{
                         printf(eMensaje[2]);
                         system("pause");
                     }
-                    auxNumA = *ptrNumeroA;
-                    auxNumB = *ptrNumeroB;
                     break;
                 case '4':
                     if(ingresoNumA && ingresoNumA){
 
-                        menuInforme(mensajeOpcion4,eMensaje[0],ptrNumeroA,ptrNumeroB,ptrResultadoSuma,ptrResultadoResta,ptrResultadoDivision,ptrResultadoMultipliacion,ptrResultadoFactorial);
+                        menuInforme(mensajeOpcion4,eMensaje[0],ptrNumeroA,ptrNumeroB,ptrResultadoSuma,ptrResultadoResta,ptrResultadoDivision,ptrResultadoMultipliacion,ptrResultadoFactorialA,ptrResultadoFactorialB);
 
                     }else{
                         printf(eMensaje[2]);
@@ -101,9 +92,11 @@ void menu(){
 
 }
 
-void menuCalculo(char mensaje[][51],char eMensaje[],float *numA,float *numB,float *resultadoSuma,float *resultadoResta,float *resultadoDivision,float *resultadoMultiplicacion,int *resultadoFactorial){
+void menuCalculo(char mensaje[][51],char eMensaje[],float *numA,float *numB,float *resultadoSuma,float *resultadoResta,float *resultadoDivision,float *resultadoMultiplicacion,int *resultadoFactorialA,int *resultadoFactorialB){
 
     int i;
+    int factorA;
+    int factorB;
     char opcion[10];
 
     char *ptrOpcion;
@@ -147,35 +140,69 @@ void menuCalculo(char mensaje[][51],char eMensaje[],float *numA,float *numB,floa
                     system("pause");
                     break;
                 case '5':
-                    factorial(numA);
-                    system("pause");
-                    factorial(numB);
-                    printf("El factorial se realizo con exito\n");
-                    system("pause");
+                    factorA = factorial(numA,resultadoFactorialA);
+                    factorB = factorial(numB,resultadoFactorialB);
+                    if(factorA && factorB){
+
+                        printf("El factorial se realizo con exito\n");
+                        system("pause");
+
+                    }else{
+
+                        printf("Engreso un numero decimal, reingrese un numero entero\n");
+                        system("pause");
+                    }
                     break;
                 case '6':
+                    factorA = factorial(numA,resultadoFactorialA);
+                    factorB = factorial(numB,resultadoFactorialB);
 
-                    printf("Todas las operaciones se realizaron con exito\n");
-                    system("pause");
+                    if((*numB != 0) && (factorA && factorB)){
+
+                        suma(numA,numB,resultadoSuma);
+                        resta(numA,numB,resultadoResta);
+                        division(numA,numB,resultadoDivision);
+                        multiplicacion(numA,numB,resultadoMultiplicacion);
+                        printf("Todas las operaciones se realizaron con exito\n");
+                        system("pause");
+
+                    }else if(*numB == 0){
+
+                        printf("El numero B tiene que ser distinto de cero\n");
+                        system("pause");
+
+                    }else{
+
+                        printf("Engreso un numero decimal, reingrese un numero entero\n");
+                        system("pause");
+                    }
                     break;
-
             }
 
     }while(*ptrOpcion !='7');
 }
 
-void menuInforme(char mensaje[][51],char eMensaje[],float *numA,float *numB,float *resultadoSuma,float *resultadoResta,float *resultadoDivision,float *resultadoMultiplicacion,int *resultadoFactorial){
+void menuInforme(char mensaje[][51],char eMensaje[],float *numA,float *numB,float *resultadoSuma,float *resultadoResta,float *resultadoDivision,float *resultadoMultiplicacion,int *resultadoFactorialA,int *resultadoFactorialB){
 
     int i;
     float totalSuma = *numA + *numB;
     float totalResta = *numA - *numB;
     float totalDivision = *numA / *numB;
     float totalMultiplicacion = *numA * *numB;
+    int totalFactorA;
+    int totalFactorB;
     char opcion[10];
 
     char *ptrOpcion;
+    int *ptrTotalFactorA;
+    int *ptrTotalFactorB;
 
     ptrOpcion = &opcion[0];
+    ptrTotalFactorA = &totalFactorA;
+    ptrTotalFactorB = &totalFactorB;
+
+    factorial(numA,ptrTotalFactorA);
+    factorial(numB,ptrTotalFactorB);
 
     do{
             system("cls");
@@ -183,6 +210,7 @@ void menuInforme(char mensaje[][51],char eMensaje[],float *numA,float *numB,floa
             for(i=0; i<8; i++){
                 printf(mensaje[i]);
             }
+            fflush(stdin);
             scanf("%s",opcion);
             validarOpcionMenu(ptrOpcion,1,7,1,eMensaje);
 
@@ -223,6 +251,30 @@ void menuInforme(char mensaje[][51],char eMensaje[],float *numA,float *numB,floa
                         system("pause");
                     }
                     break;
+                case '5':
+                    if((*resultadoFactorialA == *ptrTotalFactorA) && (*resultadoFactorialB == *ptrTotalFactorB)){
+                        printf("El factorial de %.0f es %d\n",*numA,*resultadoFactorialA);
+                        printf("El factorial de %.0f es %d\n",*numB,*resultadoFactorialB);
+                        system("pause");
+                    }else{
+                        printf("Se ingreso un numero diferente, vuelva al menu de operaciones para realizar el calculo\n");
+                        system("pause");
+                    }
+                    break;
+                case '6':
+                    if((*resultadoSuma == totalSuma) && (*resultadoResta == totalResta) && (*resultadoDivision == totalDivision) && (*resultadoMultiplicacion == totalMultiplicacion) && (*resultadoFactorialA == *ptrTotalFactorA) && (*resultadoFactorialB == *ptrTotalFactorB)){
+                        printf("La suma de %.2f + %.2f = %.2f\n",*numA,*numB,*resultadoSuma);
+                        printf("La resta de %.2f - %.2f = %.2f\n",*numA,*numB,*resultadoResta);
+                        printf("La division de %.2f / %.2f = %.2f\n",*numA,*numB,*resultadoDivision);
+                        printf("La multiplicacion de %.2f * %.2f = %.2f\n",*numA,*numB,*resultadoMultiplicacion);
+                        printf("El factorial de %.0f es %d\n",*numA,*resultadoFactorialA);
+                        printf("El factorial de %.0f es %d\n",*numB,*resultadoFactorialB);
+                        system("pause");
+                    }else{
+                        printf("Se ingreso un numero diferente, vuelva al menu de operaciones para realizar el calculo\n");
+                        system("pause");
+                    }
+
             }
     }while(*ptrOpcion !='7');
 
@@ -323,15 +375,17 @@ void multiplicacion(float *numA,float *numB,float *resultado){
     *resultado = total;
 }
 
-void factorial(float *numA){
-    long total;
-    float numeroA;
+int factorial(float *num, int *resultado){
+
+    long total = 0;
+    float numero;
     int factor;
     int flag = 0;
-    factor = *numA;
-    numeroA = *numA;
+    int ok = 0;
+    factor = *num;
+    numero = *num;
 
-    if(numeroA == factor)
+    if(numero == factor)
     {
         if(factor > 0)
         {
@@ -350,12 +404,15 @@ void factorial(float *numA){
                 }
             }
         }
+        if(numero == 1){
+            *resultado = 1;
+        }
+        else{
+            *resultado = total;
+        }
 
-        printf("\nEl factorial de %.f es: %ld\n",*numA,total);
-    }
-    else
-    {
-        printf("\nEl numero ingresado es decimal reingrese un valor correcto\n");
+        ok = 1;
     }
 
+    return ok;
 }
