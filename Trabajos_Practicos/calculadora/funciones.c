@@ -52,7 +52,8 @@ void menu(){
             printf(mensajeMenu[3]);
             printf(mensajeMenu[4]);
             printf(mensajeMenu[5]);
-            scanf("%s",opcion);
+            fflush(stdin);
+            scanf("%s",ptrOpcion);
             validarOpcionMenu(ptrOpcion,1,5,1,eMensaje[0]);
 
             switch(*ptrOpcion){
@@ -77,7 +78,7 @@ void menu(){
                     }
                     break;
                 case '4':
-                    if(ingresoNumA && ingresoNumA){
+                    if(ingresoNumA && ingresoNumB){
 
                         menuInforme(mensajeOpcion4,eMensaje[0],ptrNumeroA,ptrNumeroB,ptrResultadoSuma,ptrResultadoResta,ptrResultadoDivision,ptrResultadoMultipliacion,ptrResultadoFactorialA,ptrResultadoFactorialB);
 
