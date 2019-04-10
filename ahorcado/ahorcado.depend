@@ -3,8 +3,17 @@
 	<stdio.h>
 	<stdlib.h>
 
-1554827106 source:c:\users\artem\desktop\programacion_en_c_19\ahorcado\main.c
+1554915382 source:c:\users\artem\desktop\programacion_en_c_19\ahorcado\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
+	"funciones.h"
+
+1554915382 c:\users\artem\desktop\programacion_en_c_19\ahorcado\funciones.h
+
+1554913621 source:c:\users\artem\desktop\programacion_en_c_19\ahorcado\funciones.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"funciones.h"
 
