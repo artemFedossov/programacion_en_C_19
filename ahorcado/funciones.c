@@ -75,11 +75,10 @@ int ingresoPalabra(char *palabra){
 void adivinarPalabra(char *palabra,char *opcionMenu){
 
     char letra[51];
-    //char aux[20][3] = {' '};
+    char aux[20] = {'\0'};
     int posicion[51] = {0};
     int i;
-    //int j;
-    int vidas = 3;
+    int vidas = 5;
     int largo;
     int contador;
     int salir = 0;
@@ -98,14 +97,15 @@ void adivinarPalabra(char *palabra,char *opcionMenu){
         system("cls");
         printf("\t\tAHORCADO\n\n");
         printf("VIDAS = %d\n",*ptrVidas);
-        printf("PALABRA DE %d LETRAS\n\n",largo);
-        /*for(i=0; i<20; i++){
-            for(j=0; j<3; j++){
-                if(aux[i][j] != ' '){
-                printf("LETRAS INGRESADAS: %s\n\n",aux[i][j]);
-                }
+        printf("PALABRA DE %d LETRAS\n",largo);
+        printf("LETRAS INGRESADAS: ");
+        for(i=0; i<20; i++){
+                if(aux[i] != '\0'){
+                printf("%c ",aux[i]);
             }
-        }*/
+        }
+
+        printf("\n\n");
 
         for(i=0; i<largo; i++){
 
@@ -114,18 +114,16 @@ void adivinarPalabra(char *palabra,char *opcionMenu){
                 printf("%c",palabra[i]);
 
             }else{
-                printf(" ");
+                printf("-");
             }
         }
         ingresoLetra(ptrLetra);
-        /*for(i=0; i<20; i++){
-                for(j=0; j<3; j++){
-                    if(aux[i][j] == ' '){
-                    aux[i][j] = *ptrLetra;
-                    break;
-                }
+        for(i=0; i<20; i++){
+            if(aux[i] == '\0'){
+            aux[i] = *ptrLetra;
+            break;
             }
-        }*/
+        }
         concidencia(ptrLetra,palabra,ptrPosicion,ptrVidas);
         if(*ptrVidas == 0){
             system("cls");
@@ -203,6 +201,8 @@ void concidencia(char *ptrLetra,char *palabra,int *posicion,int *vida){
     }
 
     if(flag==0){
+        printf("Perdiste una vida\n\n");
+        system("pause");
         *vida = *vida -1;
     }
 }
