@@ -51,15 +51,15 @@ int ingresoPalabra(char *palabra){
 
     printf("\t\tAHORCADO\n\nIngrese la palabra para adivinar: ");
     fflush(stdin);
-    scanf("%s",validar);
+    gets(validar);
     strupr(validar);
 
     while(validar[i] != '\0'){
 
-        if(validar[i] < 'A' || validar[i] > 'Z'){
+        if((validar[i] < 'A' || validar[i] > 'Z') || (validar[i] == ' ')){
             printf("ERROR!!! Reingrese la palabra: ");
             fflush(stdin);
-            scanf("%s",validar);
+            gets(validar);
             strupr(validar);
             i=0;
             continue;
