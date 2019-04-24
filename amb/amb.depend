@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1555962408 source:c:\users\artem\desktop\programacion_en_c_19\amb\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+
