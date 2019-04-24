@@ -10,17 +10,20 @@ typedef struct{
     int id;
     char nombre[51];
     char apellido[51];
-    int cuit;
+    double cuit;
+    int estado;
 
 }eCliente;
 
-void menu(char menu[][41],int filaMenu,char *eMensaje,int *opcion);
+void menu(char menu[][41],int filaMenu,char *eMensaje,char *mensaje,int *opcion);
 void validarOpcionMenu(int *opcion,char *validar,char *eMensaje);
 void inicializarEstructura(eCliente *persona,int tam);
+int getInt(int* input,char *message,char *eMessage, int lowLimit, int hiLimit);
 
 int main()
 {
     int opcionMenu = 14;
+    int i;
     int *ptrOpcionMenu;
     char menuMensaje[13][41] = {"\t\tClasificados\n\n",
                                 " 1) Alta de cliente\n",
@@ -39,6 +42,8 @@ int main()
     char eMensaje[2][41] = {"ERROR: Ingreso una opcion incorrecta: ",
                             "ERROR: Ingreso un carracter incorrecto: "};
 
+    char mensaje[2][41] = {"opcion: "};
+
     eCliente persona[TAM_CLIENTE];
 
     ptrOpcionMenu = &opcionMenu;
@@ -46,7 +51,7 @@ int main()
     inicializarEstructura(persona,TAM_CLIENTE);
 
     do{
-        menu(menuMensaje,13,eMensaje[0],ptrOpcionMenu);
+        menu(menuMensaje,13,eMensaje[0],mensaje[0],ptrOpcionMenu);
 
         switch(*ptrOpcionMenu){
 
@@ -56,8 +61,13 @@ int main()
                 break;
 
             case 2:
-                    printf("%s",persona[0].nombre);
-                    printf("%s",persona[1].nombre);
+                    for(i=0; i<TAM_CLIENTE; i++){
+
+                        if(persona[i].id > 0){
+
+                            printf("nombre %s\napellido %s\ncuit %.0f\n",persona[i].nombre,persona[i].apellido,persona[i].cuit);
+                        }
+                    }
                 break;
 
         }
@@ -68,20 +78,23 @@ int main()
     return 0;
 }
 
-void menu(char menu[][41],int filaMenu,char *eMensaje,int *opcion){
+void menu(char menu[][41],int filaMenu,char *eMensaje,char *mensaje,int *opcion){
 
     int i;
     char validar[51];
+    int r;
 
     for(i=0; i<filaMenu; i++){
 
         printf(menu[i]);
     }
 
-    fflush(stdin);
-    scanf("%s",validar);
+    do{
 
-    validarOpcionMenu(opcion,validar,eMensaje);
+        r = getInt(opcion,mensaje,eMensaje,1,11);
+
+    }while(r == -1);
+
 }
 
 
@@ -132,6 +145,7 @@ void inicializarEstructura(eCliente *persona,int tam){
     for(i=0; i<tam; i++){
 
         persona[i].id = 0;
+        persona[i].estado = 0;
     }
 
 }
@@ -139,6 +153,8 @@ void inicializarEstructura(eCliente *persona,int tam){
 void altaCliente(eCliente *persona,int tam,char *eMensaje){
 
     int indice;
+    double auxCuit;
+    char cuit[20];
     char nombre[51];
     char apellido[51];
 
@@ -146,19 +162,34 @@ void altaCliente(eCliente *persona,int tam,char *eMensaje){
 
     if(indice != -1){
 
-        persona[indice].id = indice +1;
-
         printf("Ingrese el nombre: ");
         fflush(stdin);
         gets(nombre);
         validarNombres(persona,tam,nombre,eMensaje);
-        strcpy(persona[indice].nombre,nombre);
 
         printf("Ingrese el apellido: ");
         fflush(stdin);
         gets(apellido);
         validarNombres(persona,tam,apellido,eMensaje);
-        strcpy(persona[indice].apellido,apellido);
+
+
+        printf("Ingrese el Cuit: ");
+        fflush(stdin);
+        gets(cuit);
+        if(validarCuit(persona,tam,cuit,eMensaje)){
+
+            auxCuit = atof(cuit);
+            persona[indice].cuit = auxCuit;
+            strcpy(persona[indice].apellido,apellido);
+            strcpy(persona[indice].nombre,nombre);
+            persona[indice].id = indice +1;
+            persona[indice].estado = 1;
+        }
+
+
+    }
+    else{
+        printf("No hay mas lugar!");
     }
 }
 
@@ -214,4 +245,107 @@ void validarNombres(eCliente *persona,int tam,char *palabra,char *eMensaje){
         }
         i++;
     }
+}
+
+int validarCuit(eCliente *persona,int tam,char *cuit,char *eMensaje){
+
+    int i=0;
+    int cant;
+    int esta;
+    int todoOk = 0;
+
+    cant = strlen(cuit);
+
+    while(cuit[i] != '\0'){
+
+        if((cuit[i] < '0' || cuit[i] > '9') || (cant!=11)){
+
+            printf(eMensaje);
+            fflush(stdin);
+            scanf("%s",cuit);
+            cant = strlen(cuit);
+            i=0;
+            continue;
+        }
+        i++;
+    }
+
+    esta = buscarCuit(persona,tam,cuit);
+
+    if(esta == 1){
+
+        printf("Ya existe un empleado con el mismo cuit");
+        todoOk = 1;
+    }
+
+    return todoOk;
+}
+
+int buscarCuit(eCliente *persona,int tam,char *cuit){
+
+    int i;
+    double auxCuit;
+    int retorno = 0;
+
+    auxCuit = atof(cuit);
+
+    for(i=0; i<tam; i++){
+
+        if(persona[i].cuit == auxCuit){
+
+            retorno = 1;
+        }
+    }
+
+    return retorno;
+}
+
+int getInt(int* input,char message[],char eMessage[], int lowLimit, int hiLimit)
+{
+
+    int i=0;
+    char validar[100];
+    int rango;
+    int todoOk = -1;
+
+    printf(message);
+    fflush(stdin);
+    gets(validar);
+
+    esNumero(validar,eMessage);
+
+    rango = atoi(validar);
+
+    while(rango < lowLimit || rango > hiLimit){
+
+        printf(eMessage);
+        fflush(stdin);
+        scanf("%s",validar);
+        esNumero(validar,eMessage);
+        rango = atoi(validar);
+    }
+
+    *input = rango;
+    todoOk = 0;
+
+    return todoOk;
+}
+
+void esNumero(char *validar,char *eMessage){
+
+    int i=0;
+
+    while(validar[i] != '\0'){
+
+        if(validar[i] < '0' || validar[i] > '9'){
+
+            printf(eMessage);
+            fflush(stdin);
+            gets(validar);
+            i=0;
+            continue;
+        }
+        i++;
+    }
+
 }
